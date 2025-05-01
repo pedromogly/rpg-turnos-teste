@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhxbr3dcjlswf"]
+
+[ext_resource type="Script" uid="uid://dk0x8hf751fu2" path="res://addons/tnowe_extra_controls/elements/dock_container.gd" id="1_dhutj"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Container" type="Container" parent="."]
+layout_mode = 0
+offset_left = 349.0
+offset_top = 90.0
+offset_right = 766.0
+offset_bottom = 415.0
+script = ExtResource("1_dhutj")
+dock_region_preview_color = Color(0.299266, 0.299266, 0.299266, 0.5)

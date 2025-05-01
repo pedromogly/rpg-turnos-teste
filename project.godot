@@ -1,0 +1,16 @@
+config_version=5
+
+[application]
+
+config/name="RPG-Turno-Teste"
+config/features=PackedStringArray("4.4", "GL Compatibility")
+config/icon="res://icon.svg"
+
+[autoload]
+
+PlayerAttributes="*res://Autoloads/Player_Attributes.gd"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

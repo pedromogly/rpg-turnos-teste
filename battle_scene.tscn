@@ -1,0 +1,205 @@
+[gd_scene load_steps=12 format=3 uid="uid://d3jt5mlda5ghc"]
+
+[ext_resource type="Script" uid="uid://dkwdk43vowsed" path="res://BattleManager.gd" id="1_5g7vw"]
+[ext_resource type="Texture2D" uid="uid://byrnspgyeat0c" path="res://images/ChatGPT Image 30 de abr. de 2025, 10_09_13.png" id="1_fw8re"]
+[ext_resource type="Texture2D" uid="uid://c1paxu78i460g" path="res://icon.svg" id="2_r5l0u"]
+[ext_resource type="Script" uid="uid://ec1wy0jvpg8j" path="res://PlayerManager.gd" id="4_5joda"]
+[ext_resource type="Script" uid="uid://vjg3vwuopylk" path="res://EnemyManager.gd" id="5_gf131"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r5l0u"]
+texture = ExtResource("1_fw8re")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sl17i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vtmj2"]
+
+[sub_resource type="Animation" id="Animation_onrkg"]
+resource_name = "UP_Text"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.01, 1.98),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(5.42055, -106.243), Vector2(5.42055, -263.439)]
+}
+
+[sub_resource type="Animation" id="Animation_i3pqv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(5.42055, -106.243)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hqtel"]
+_data = {
+&"RESET": SubResource("Animation_i3pqv"),
+&"UP_Text": SubResource("Animation_onrkg")
+}
+
+[node name="BattleScene" type="Node2D" node_paths=PackedStringArray("labelTurnInfo", "labelSeconds", "progressRound")]
+script = ExtResource("1_5g7vw")
+labelTurnInfo = NodePath("Panel/VBoxContainer/TurnoInfo")
+labelSeconds = NodePath("Panel/VBoxContainer/TurnoSeconds")
+progressRound = NodePath("Panel/TextureProgressBar")
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 1168.0
+offset_bottom = 667.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_r5l0u")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Panel"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 148.0
+offset_right = 67.0
+offset_bottom = 501.0
+value = 49.0
+rounded = true
+fill_mode = 3
+nine_patch_stretch = true
+texture_under = SubResource("AtlasTexture_sl17i")
+texture_progress = SubResource("AtlasTexture_vtmj2")
+tint_under = Color(0.198287, 0.198287, 0.198287, 1)
+tint_over = Color(0.811765, 0.101961, 0.811765, 1)
+tint_progress = Color(0.93968, 0.709078, 0.920712, 0.462745)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 0
+offset_left = 475.0
+offset_top = 21.0
+offset_right = 695.0
+offset_bottom = 109.0
+
+[node name="TurnoInfo" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Seu Turno"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TurnoSeconds" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AreaBattle1" type="Polygon2D" parent="Panel"]
+position = Vector2(76.8966, -34.7414)
+scale = Vector2(0.922414, 0.922414)
+color = Color(1, 0.42, 0.42, 0.611765)
+polygon = PackedVector2Array(76, 589, 124, 616, 214, 622, 375, 610, 457, 557, 404, 516, 246, 506, 140, 522)
+
+[node name="Player" type="Sprite2D" parent="Panel/AreaBattle1" node_paths=PackedStringArray("progressBar", "uiBattle")]
+position = Vector2(250.542, 499.495)
+texture = ExtResource("2_r5l0u")
+script = ExtResource("4_5joda")
+progressBar = NodePath("../../TextureProgressBar")
+uiBattle = NodePath("UI Battle")
+
+[node name="UI Battle" type="Control" parent="Panel/AreaBattle1/Player"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -309.0
+offset_top = 64.0
+offset_right = 912.0
+offset_bottom = 234.0
+
+[node name="Attack" type="Button" parent="Panel/AreaBattle1/Player/UI Battle"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 13.0
+offset_right = 530.0
+offset_bottom = 90.0
+theme_override_font_sizes/font_size = 50
+text = "ATTACK"
+
+[node name="Esquiva" type="Button" parent="Panel/AreaBattle1/Player/UI Battle"]
+layout_mode = 0
+offset_left = 576.0
+offset_top = 10.0
+offset_right = 1052.0
+offset_bottom = 87.0
+theme_override_font_sizes/font_size = 50
+text = "ESQUIVA
+"
+
+[node name="DisplayInfos" type="Label" parent="Panel/AreaBattle1/Player"]
+visible = false
+offset_left = 5.42055
+offset_top = -106.243
+offset_right = 136.421
+offset_bottom = -51.243
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "null"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel/AreaBattle1/Player/DisplayInfos"]
+libraries = {
+&"": SubResource("AnimationLibrary_hqtel")
+}
+
+[node name="AreaBattle2" type="Polygon2D" parent="Panel"]
+position = Vector2(656, 127)
+scale = Vector2(0.495392, 0.495392)
+color = Color(1, 0.32, 0.32, 0.596078)
+polygon = PackedVector2Array(76, 589, 124, 616, 214, 622, 375, 610, 457, 557, 404, 516, 246, 506, 140, 522)
+
+[node name="Enemy" type="Sprite2D" parent="Panel/AreaBattle2"]
+position = Vector2(292.697, 468.316)
+scale = Vector2(1.18332, 1.18332)
+texture = ExtResource("2_r5l0u")
+script = ExtResource("5_gf131")
+
+[node name="DisplayInfos" type="Label" parent="Panel/AreaBattle2/Enemy"]
+visible = false
+offset_left = 5.42055
+offset_top = -106.243
+offset_right = 136.421
+offset_bottom = -37.243
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 50
+text = "null"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel/AreaBattle2/Enemy/DisplayInfos"]
+libraries = {
+&"": SubResource("AnimationLibrary_hqtel")
+}
