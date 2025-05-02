@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d3jt5mlda5ghc"]
+[gd_scene load_steps=14 format=3 uid="uid://d3jt5mlda5ghc"]
 
 [ext_resource type="Script" uid="uid://dkwdk43vowsed" path="res://BattleManager.gd" id="1_5g7vw"]
 [ext_resource type="Texture2D" uid="uid://byrnspgyeat0c" path="res://images/ChatGPT Image 30 de abr. de 2025, 10_09_13.png" id="1_fw8re"]
@@ -74,11 +74,17 @@ _data = {
 &"UP_Text": SubResource("Animation_onrkg")
 }
 
-[node name="BattleScene" type="Node2D" node_paths=PackedStringArray("labelTurnInfo", "labelSeconds", "progressRound")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_gf131"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x5h4l"]
+
+[node name="BattleScene" type="Node2D" node_paths=PackedStringArray("labelTurnInfo", "labelSeconds", "progressRound", "enemy", "player")]
 script = ExtResource("1_5g7vw")
 labelTurnInfo = NodePath("Panel/VBoxContainer/TurnoInfo")
 labelSeconds = NodePath("Panel/VBoxContainer/TurnoSeconds")
 progressRound = NodePath("Panel/TextureProgressBar")
+enemy = NodePath("Panel/AreaBattle2/Enemy")
+player = NodePath("Panel/AreaBattle1/Player")
 
 [node name="Panel" type="Panel" parent="."]
 offset_right = 1168.0
@@ -99,7 +105,7 @@ texture_under = SubResource("AtlasTexture_sl17i")
 texture_progress = SubResource("AtlasTexture_vtmj2")
 tint_under = Color(0.198287, 0.198287, 0.198287, 1)
 tint_over = Color(0.811765, 0.101961, 0.811765, 1)
-tint_progress = Color(0.93968, 0.709078, 0.920712, 0.462745)
+tint_progress = Color(5.19812e-06, 0.713214, 0.891866, 0.462745)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 layout_mode = 0
@@ -128,12 +134,14 @@ scale = Vector2(0.922414, 0.922414)
 color = Color(1, 0.42, 0.42, 0.611765)
 polygon = PackedVector2Array(76, 589, 124, 616, 214, 622, 375, 610, 457, 557, 404, 516, 246, 506, 140, 522)
 
-[node name="Player" type="Sprite2D" parent="Panel/AreaBattle1" node_paths=PackedStringArray("progressBar", "uiBattle")]
+[node name="Player" type="Sprite2D" parent="Panel/AreaBattle1" node_paths=PackedStringArray("progressBar", "uiBattle", "attackButton", "esquivaButton")]
 position = Vector2(250.542, 499.495)
 texture = ExtResource("2_r5l0u")
 script = ExtResource("4_5joda")
 progressBar = NodePath("../../TextureProgressBar")
 uiBattle = NodePath("UI Battle")
+attackButton = NodePath("UI Battle/Attack")
+esquivaButton = NodePath("UI Battle/Esquiva")
 
 [node name="UI Battle" type="Control" parent="Panel/AreaBattle1/Player"]
 layout_mode = 3
@@ -183,11 +191,16 @@ scale = Vector2(0.495392, 0.495392)
 color = Color(1, 0.32, 0.32, 0.596078)
 polygon = PackedVector2Array(76, 589, 124, 616, 214, 622, 375, 610, 457, 557, 404, 516, 246, 506, 140, 522)
 
-[node name="Enemy" type="Sprite2D" parent="Panel/AreaBattle2"]
+[node name="Enemy" type="Sprite2D" parent="Panel/AreaBattle2" node_paths=PackedStringArray("progressBarHealth", "animations", "displayInfos", "player", "labelProgressBar")]
 position = Vector2(292.697, 468.316)
 scale = Vector2(1.18332, 1.18332)
 texture = ExtResource("2_r5l0u")
 script = ExtResource("5_gf131")
+progressBarHealth = NodePath("TextureProgressBar")
+animations = NodePath("DisplayInfos/AnimationPlayer")
+displayInfos = NodePath("DisplayInfos")
+player = NodePath("../../AreaBattle1/Player")
+labelProgressBar = NodePath("TextureProgressBar/Label")
 
 [node name="DisplayInfos" type="Label" parent="Panel/AreaBattle2/Enemy"]
 visible = false
@@ -203,3 +216,38 @@ text = "null"
 libraries = {
 &"": SubResource("AnimationLibrary_hqtel")
 }
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Panel/AreaBattle2/Enemy"]
+offset_left = -129.647
+offset_top = -179.118
+offset_right = 119.353
+offset_bottom = -150.118
+value = 50.0
+nine_patch_stretch = true
+texture_under = SubResource("AtlasTexture_gf131")
+texture_progress = SubResource("AtlasTexture_x5h4l")
+tint_under = Color(1, 0.166111, 0.11126, 1)
+tint_progress = Color(2.16588e-06, 0.604669, 0.151293, 1)
+
+[node name="Label" type="Label" parent="Panel/AreaBattle2/Enemy/TextureProgressBar"]
+layout_mode = 0
+offset_left = 92.1176
+offset_top = 3.41177
+offset_right = 164.118
+offset_bottom = 26.4118
+
+[node name="Over" type="Panel" parent="Panel"]
+visible = false
+layout_mode = 0
+offset_right = 1177.0
+offset_bottom = 664.0
+
+[node name="Label" type="Label" parent="Panel/Over"]
+layout_mode = 0
+offset_left = 379.0
+offset_top = 207.0
+offset_right = 726.0
+offset_bottom = 335.0
+theme_override_font_sizes/font_size = 50
+
+[connection signal="button_up" from="Panel/AreaBattle1/Player/UI Battle/Attack" to="Panel/AreaBattle1/Player" method="_on_attack_button_up"]

@@ -4,6 +4,9 @@ extends Node2D
 @export var labelSeconds: Label
 @export var progressRound: TextureProgressBar
 
+@export var enemy:Sprite2D
+@export var player:Sprite2D
+
 var waitTimeDefault = 30
 var speedEnemy
 var speedPlayer
@@ -34,3 +37,11 @@ func player_waiting(delta: float):
 func _on_timer_timeout():
 	progressRound.value = 0.0
 	timer.paused = true
+	
+
+func win_battle(healthOponent):
+	if healthOponent <= 0:
+		print("TU GANHOU PARABENS OTARIO")
+func lose_battle(healthPlayer):
+	if healthPlayer <= 0:
+		print("TU PERDEU, OTARIO")
