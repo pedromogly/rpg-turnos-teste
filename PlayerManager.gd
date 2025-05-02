@@ -11,7 +11,7 @@ func _ready():
 	pass
 
 func _physics_process(delta: float) -> void:
-	if progressBar.value == 100.0:
+	if progressBar.value == 500.0:
 		isMyTurn()
 	else:
 		uiBattle.visible = false
