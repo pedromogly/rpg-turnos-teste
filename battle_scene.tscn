@@ -134,10 +134,11 @@ scale = Vector2(0.922414, 0.922414)
 color = Color(1, 0.42, 0.42, 0.611765)
 polygon = PackedVector2Array(76, 589, 124, 616, 214, 622, 375, 610, 457, 557, 404, 516, 246, 506, 140, 522)
 
-[node name="Player" type="Sprite2D" parent="Panel/AreaBattle1" node_paths=PackedStringArray("progressBar", "uiBattle", "attackButton", "esquivaButton")]
+[node name="Player" type="Sprite2D" parent="Panel/AreaBattle1" node_paths=PackedStringArray("battleManagement", "progressBar", "uiBattle", "attackButton", "esquivaButton")]
 position = Vector2(250.542, 499.495)
 texture = ExtResource("2_r5l0u")
 script = ExtResource("4_5joda")
+battleManagement = NodePath("../../..")
 progressBar = NodePath("../../TextureProgressBar")
 uiBattle = NodePath("UI Battle")
 attackButton = NodePath("UI Battle/Attack")
